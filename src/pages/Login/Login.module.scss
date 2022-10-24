@@ -1,0 +1,37 @@
+.login {
+	margin-left: 25%;
+}
+.form {
+	padding-top: 20vh;
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	& > input {
+		margin-top: 10px;
+		color: black;
+	}
+	& > label {
+		display: flex;
+		flex-direction: column;
+		color: white;
+	}
+}
+.formInput {
+	color: black;
+	padding: 5px;
+}
+.formBtn {
+	@apply px-10 py-2;
+	background-color: #860049 !important;
+	border-radius: 0.65rem;
+	margin-left: 0px;
+	margin-top: 20px;
+	transition: 0.3s ease-in-out;
+	width: 140px;
+	&:hover {
+		background-color: red !important;
+	}
+	text-align: center;
+	color: white !important;
+	width: 100%;
+}
