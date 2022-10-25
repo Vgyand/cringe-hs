@@ -1,24 +1,32 @@
+import { UserAuth } from 'providers/AuthProvider'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toastr } from 'react-redux-toastr'
+import { useNavigate } from 'react-router-dom'
 
-import { FormValues } from '@/shared/types/formTypes'
+import { IAuthTypes } from '@/shared/types/authTypes'
 
 import styles from './Register.module.scss'
 
-const Register = () => {
+const Register: FC = () => {
+	const { createUser } = UserAuth()
+	const navigate = useNavigate()
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<FormValues>({
+	} = useForm<IAuthTypes>({
 		mode: 'onBlur',
 	})
 
-	console.log(errors)
-
-	const onSubmit: SubmitHandler<FormValues> = (data) => {
-		toastr.success('User has been registered', `${data.login}`)
-		//register function will be implemented
+	const onSubmit: SubmitHandler<IAuthTypes> = async (data) => {
+		try {
+			await createUser(data.email, data.password)
+			toastr.success('User has been registered', `${data.email}`)
+			navigate('/')
+		} catch (e) {
+			toastr.error('Error', `Email is already used`)
+		}
 	}
 
 	return (
@@ -26,19 +34,19 @@ const Register = () => {
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 				<h1 className="text-white text-3xl mx-auto">Register</h1>
 				<label>
-					Login
+					Email
 					<input
-						{...register('login', {
+						{...register('email', {
 							required: 'Is required',
-							minLength: {
-								value: 6,
-								message: 'Min 6 symbols',
+							pattern: {
+								value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+								message: 'invalid email address',
 							},
 						})}
 						className={styles.formInput}
 					/>
-					{errors?.login && (
-						<p className="text-primary">{errors.login.message}</p>
+					{errors?.email && (
+						<p className="text-primary">{errors.email.message}</p>
 					)}
 				</label>
 				<label>

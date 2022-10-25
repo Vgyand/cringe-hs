@@ -1,6 +1,8 @@
+import { FC } from 'react'
+
 import Button from '../../ui/Button/Button'
 
-const Menu = () => {
+const Menu: FC = () => {
 	return (
 		<div>
 			<Button type="button" text="Log In" to="/login" />

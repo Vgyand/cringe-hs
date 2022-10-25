@@ -1,24 +1,34 @@
+import { UserAuth } from 'providers/AuthProvider'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toastr } from 'react-redux-toastr'
+import { useNavigate } from 'react-router-dom'
 
-import { FormValues } from '@/shared/types/formTypes'
+import { IAuthTypes } from '../../shared/types/authTypes'
 
 import styles from './Login.module.scss'
 
-const Login = () => {
+const Login: FC = () => {
+	const { signIn } = UserAuth()
+	const navigate = useNavigate()
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<FormValues>({
+	} = useForm<IAuthTypes>({
 		mode: 'onBlur',
 	})
 
-	console.log(errors)
-
-	const onSubmit: SubmitHandler<FormValues> = (data) => {
-		toastr.success('User has been autherized', `${data.login}`)
-		//login function will be implemented
+	const onSubmit: SubmitHandler<IAuthTypes> = async (data) => {
+		try {
+			await signIn(data.email, data.password)
+			toastr.success('User has been succsesfully logged in', `${data.email}`)
+			navigate('/')
+		} catch (e: any) {
+			if (e.code === 'auth/user-not-found') {
+				toastr.error(`Login or password error`, `User not found`)
+			}
+		}
 	}
 
 	return (
@@ -26,19 +36,19 @@ const Login = () => {
 			<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 				<h1 className="text-white text-3xl mx-auto">Login</h1>
 				<label>
-					Login
+					Email
 					<input
-						{...register('login', {
+						{...register('email', {
 							required: 'Is required',
-							minLength: {
-								value: 6,
-								message: 'Min 6 symbols',
+							pattern: {
+								value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+								message: 'invalid email address',
 							},
 						})}
 						className={styles.formInput}
 					/>
-					{errors?.login && (
-						<p className="text-primary">{errors.login.message}</p>
+					{errors?.email && (
+						<p className="text-primary">{errors.email.message}</p>
 					)}
 				</label>
 				<label>
@@ -46,10 +56,6 @@ const Login = () => {
 					<input
 						{...register('password', {
 							required: 'Is required',
-							minLength: {
-								value: 6,
-								message: 'Password is not hard enough',
-							},
 						})}
 						type="password"
 						className={styles.formInput}
