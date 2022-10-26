@@ -33,7 +33,8 @@
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		"src/providers/AuthProvider.tsx"
+		"src/providers/AuthProvider.tsx",
+		"src/store/cardsApi.js"
 	],
 	"exclude": ["node_modules"]
 }

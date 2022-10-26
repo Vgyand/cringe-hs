@@ -1,18 +1,18 @@
 import { useUserAuth } from 'providers/AuthProvider'
-import { toastr } from 'react-redux-toastr'
 import { useNavigate } from 'react-router-dom'
 
-import { IProtectedType } from '../shared/types/authTypes'
-
-const ProtectedRoute = ({ children }: IProtectedType) => {
-	const navigate = useNavigate()
-
-	const { user } = useUserAuth()
-	if (!user) {
-		toastr.error('You should be autherized', 'access error')
-		navigate('/')
-	}
-	return children
+interface IAuthContextProps {
+	children: JSX.Element
 }
 
-export default ProtectedRoute
+export const ProtectedRoute = ({ children }: IAuthContextProps) => {
+	const { user } = useUserAuth()
+	const navigate = useNavigate()
+
+	if (!user) {
+		navigate('/login')
+		return null
+	}
+
+	return children
+}
