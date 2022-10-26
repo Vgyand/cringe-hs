@@ -1,12 +1,10 @@
-import { FC } from 'react'
-
 import Button from '../../ui/Button/Button'
 
-const Menu: FC = () => {
+const Menu = () => {
 	return (
 		<div>
 			<Button type="button" text="Log In" to="/login" />
-			<Button type="button" text="Sign In" to="/register" />
+			<Button type="button" text="Sign Up" to="/register" />
 		</div>
 	)
 }

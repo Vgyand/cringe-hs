@@ -1,5 +1,6 @@
-// Запара с ts (!**)
 import {
+	User,
+	UserCredential,
 	createUserWithEmailAndPassword,
 	onAuthStateChanged,
 	signInWithEmailAndPassword,
@@ -9,22 +10,28 @@ import { FC, createContext, useContext, useEffect, useState } from 'react'
 
 import { auth } from '../config/base'
 
-const UserContext = createContext<any>('')
+export interface AuthContextModel {
+	user: User | null
+	createUser: (email: string, password: string) => Promise<UserCredential>
+	signIn: (email: string, password: string) => Promise<UserCredential>
+	logout: () => Promise<void>
+}
+
+const UserContext = createContext<AuthContextModel>({} as AuthContextModel)
+
 interface IAuthTypesContext {
 	children: JSX.Element
 }
 
 export const AuthContextProvider: FC<IAuthTypesContext> = ({ children }) => {
-	const [user, setUser] = useState()
+	const [user, setUser] = useState<User | null>(null)
 
 	const createUser = (email: string, password: string) => {
 		return createUserWithEmailAndPassword(auth, email, password)
-		//Кривые типы(!*)
 	}
 
 	const signIn = (email: string, password: string) => {
 		return signInWithEmailAndPassword(auth, email, password)
-		//Кривые типы(!*)
 	}
 
 	const logout = () => {
@@ -42,12 +49,12 @@ export const AuthContextProvider: FC<IAuthTypesContext> = ({ children }) => {
 	}, [])
 
 	return (
-		<UserContext.Provider value={{ createUser, user, logout, signIn }}>
+		<UserContext.Provider value={{ createUser, user, signIn, logout }}>
 			{children}
 		</UserContext.Provider>
 	)
 }
 
-export const UserAuth = () => {
+export const useUserAuth = () => {
 	return useContext(UserContext)
 }

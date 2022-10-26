@@ -1,8 +1,6 @@
-import { FC } from 'react'
-
 import styles from './Cards.module.scss'
 
-const Cards: FC = () => {
+const Cards = () => {
 	return <div className={styles.cards}>Cards</div>
 }
 

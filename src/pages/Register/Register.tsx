@@ -1,15 +1,16 @@
-import { UserAuth } from 'providers/AuthProvider'
-import { FC } from 'react'
+import { useUserAuth } from 'providers/AuthProvider'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toastr } from 'react-redux-toastr'
 import { useNavigate } from 'react-router-dom'
 
 import { IAuthTypes } from '@/shared/types/authTypes'
 
+import { RegX } from '../../config/constants'
+
 import styles from './Register.module.scss'
 
-const Register: FC = () => {
-	const { createUser } = UserAuth()
+const Register = () => {
+	const { createUser } = useUserAuth()
 	const navigate = useNavigate()
 	const {
 		register,
@@ -39,7 +40,7 @@ const Register: FC = () => {
 						{...register('email', {
 							required: 'Is required',
 							pattern: {
-								value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+								value: RegX,
 								message: 'invalid email address',
 							},
 						})}

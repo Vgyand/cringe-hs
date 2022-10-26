@@ -1,5 +1,4 @@
-import { UserAuth } from 'providers/AuthProvider'
-import { FC } from 'react'
+import { useUserAuth } from 'providers/AuthProvider'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toastr } from 'react-redux-toastr'
 import { useNavigate } from 'react-router-dom'
@@ -8,8 +7,8 @@ import { IAuthTypes } from '../../shared/types/authTypes'
 
 import styles from './Login.module.scss'
 
-const Login: FC = () => {
-	const { signIn } = UserAuth()
+const Login = () => {
+	const { signIn } = useUserAuth()
 	const navigate = useNavigate()
 	const {
 		register,
@@ -26,7 +25,7 @@ const Login: FC = () => {
 			navigate('/')
 		} catch (e: any) {
 			if (e.code === 'auth/user-not-found') {
-				toastr.error(`Login or password error`, `User not found`)
+				toastr.error('Login or password error', 'User not found')
 			}
 		}
 	}

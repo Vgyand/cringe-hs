@@ -1,8 +1,6 @@
-import { FC } from 'react'
-
 import Cards from '../components/Cards/Cards'
 
-const MainPage: FC = () => {
+const MainPage = () => {
 	return <Cards />
 }
 
