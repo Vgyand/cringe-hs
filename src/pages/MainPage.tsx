@@ -1,7 +1,12 @@
-import Cards from '../components/Cards/Cards'
+import CardsWrapper from '../components/CardsWrapper/CardsWrapper'
 
 const MainPage = () => {
-	return <Cards />
+	return (
+		<>
+			<h1 className="text-center">Cards</h1>
+			<CardsWrapper />
+		</>
+	)
 }
 
 export default MainPage

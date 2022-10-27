@@ -13,7 +13,7 @@ export const cardsApi = createApi({
 			}),
 			transformResponse(response) {
 				return response.filter(
-					(el) => el.cardClass === 'MAGE' && el.cost === 4 && el.attack === 3
+					(el) => el.type === 'SPELL' || el.type === 'MINION'
 				)
 			},
 		}),
