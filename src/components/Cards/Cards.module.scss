@@ -2,4 +2,12 @@
 	@apply underline;
 	margin-left: 25%;
 	width: 50%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	img {
+		width: 180px;
+	}
+}
+.card {
+	width: 180px;
 }

@@ -7,8 +7,8 @@ import Pagination from '../Pagination/Pagination'
 const CardsWrapper = () => {
 	const { data, isLoading } = useGetCardsQuery('')
 	const [currentPage, setCurrentPage] = useState(5)
-	const [cardsPerPage, setPostsPerPage] = useState(30)
-	console.log(data)
+	const [cardsPerPage] = useState(90)
+
 	if (data) {
 		const indexOfLastCard = currentPage * cardsPerPage
 		const indexOfFirdsCard = indexOfLastCard - cardsPerPage
@@ -27,6 +27,7 @@ const CardsWrapper = () => {
 					postsPerPage={cardsPerPage}
 					totalPosts={data.length}
 					paginate={paginate}
+					currentPage={currentPage}
 				/>
 			</div>
 		)

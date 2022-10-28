@@ -13,7 +13,9 @@ export const cardsApi = createApi({
 			}),
 			transformResponse(response) {
 				return response.filter(
-					(el) => el.type === 'SPELL' || el.type === 'MINION'
+					(el) =>
+						(el.type === 'SPELL' || el.type === 'MINION') &&
+						el.cardClass === 'NEUTRAL'
 				)
 			},
 		}),
