@@ -34,7 +34,7 @@
 		"**/*.ts",
 		"**/*.tsx",
 		"src/providers/AuthProvider.tsx",
-		"src/store/cardsApi.js"
+		"src/store/cardsApi.ts"
 	],
 	"exclude": ["node_modules"]
 }

@@ -1,23 +1,19 @@
+import { ICard } from '@/shared/types/cardTypes'
+
 import styles from './Cards.module.scss'
 
-const Cards = ({ cards, loading }: any) => {
-	if (loading) {
-		return <h2>loading...</h2>
-	}
-
-	const handleClickOnCard = (card: any, event: any) => {
-		event.preventDefault()
+//types (!**)
+const Cards = ({ cards }: any) => {
+	const handleClickOnCard = (card: ICard, event: Event | undefined): void => {
+		event?.preventDefault()
 		console.log(card)
 	}
+	console.log(cards)
 	return (
 		<div className={styles.cards}>
-			{cards.map((el: any) => (
+			{cards.map((el: ICard) => (
 				<a href="/" onClick={() => handleClickOnCard(el, window.event)}>
-					<img
-						className={styles.card}
-						src={`https://art.hearthstonejson.com/v1/render/latest/enUS/256x/${el.id}.png`}
-						alt=""
-					/>
+					<img className={styles.card} src={el.img} alt="" />
 				</a>
 			))}
 		</div>

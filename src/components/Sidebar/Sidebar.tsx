@@ -1,4 +1,5 @@
 import { useUserAuth } from 'providers/AuthProvider'
+import React from 'react'
 import { toastr } from 'react-redux-toastr'
 import { useNavigate } from 'react-router-dom'
 
@@ -15,7 +16,9 @@ const Sidebar = () => {
 			await logout()
 			toastr.success('User has been succesfully loggen out', 'logged out')
 			navigate('/')
-		} catch (e: any) {
+		} catch (
+			e: any //error type (!**)
+		) {
 			toastr.error(`${e.code}`, 'error')
 		}
 	}

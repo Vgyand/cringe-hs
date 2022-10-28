@@ -1,3 +1,5 @@
+import { IPaginationType } from '@/shared/types/cardTypes'
+
 import styles from './Paginations.module.scss'
 
 const Pagination = ({
@@ -5,24 +7,28 @@ const Pagination = ({
 	totalPosts,
 	paginate,
 	currentPage,
-}: any) => {
-	const pageNumbers: any = []
-	for (let i: any = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+}: IPaginationType) => {
+	const pageNumbers: Array<number> = []
+	for (let i: number = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
 		pageNumbers.push(i)
 	}
 
 	return (
 		<ul className={styles.pagination}>
-			{pageNumbers.map((number: any) => (
+			{pageNumbers.map((number: number) => (
 				<li
 					key={number}
 					className={
 						(currentPage === number ? `${styles.active} ` : '') +
-						styles.constrols
+						styles.controls
 					}
-					id={number}
 				>
-					<a onClick={(event) => paginate(number, event)} href="/">
+					<a
+						onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
+							paginate(number, event)
+						}
+						href="/"
+					>
 						{number}
 					</a>
 				</li>
