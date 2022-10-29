@@ -1,9 +1,12 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
 
+import { cardsApi } from './cardsApi'
 import { reducers } from './rootReducert'
 
 export const store = configureStore({
 	reducer: reducers,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat(cardsApi.middleware),
 	devTools: true,
 })
 
