@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { toastr } from 'react-redux-toastr'
 
-import { useGetCardsByClassQuery } from '../../store/cardsApi'
+import { useGetCardsByQueryQuery } from '../../store/cardsApi'
 import Cards from '../Cards/Cards'
 import Filter from '../Filter/Filter'
 import Pagination from '../Pagination/Pagination'
@@ -8,10 +9,19 @@ import Pagination from '../Pagination/Pagination'
 import styles from './CardsWrapper.module.scss'
 
 const CardsWrapper = () => {
-	const [heroClass, setHeroClass] = useState('paladin')
-	const { data, isLoading } = useGetCardsByClassQuery(heroClass)
+	const [heroClass, setHeroClass] = useState('')
+	const [search, setSearch] = useState('')
+	const [cost, setCost] = useState('')
+	const searchState: any = {
+		heroClass: heroClass,
+		search: search,
+		cost: cost,
+	}
+	console.log(searchState)
+	const { data, isLoading, isFetching, error } =
+		useGetCardsByQueryQuery(searchState)
 	const [currentPage, setCurrentPage] = useState(1)
-	const [cardsPerPage] = useState(90)
+	const [cardsPerPage] = useState(60)
 
 	if (isLoading) return <p className="text-center">loading</p>
 
@@ -19,47 +29,54 @@ const CardsWrapper = () => {
 	const indexOfFirdsCard = indexOfLastCard - cardsPerPage
 	const currentCards = data.slice(indexOfFirdsCard, indexOfLastCard)
 
-	const paginate = (
-		pageNumber: number,
-		event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-	) => {
-		event.preventDefault()
+	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber)
+	}
+
+	if (error) {
+		if ('status' in error) {
+			const errMsg = 'error' in error ? error.error : JSON.stringify(error.data)
+			toastr.error(errMsg, 'no such card')
+		} else {
+			return <div>{error.message}</div>
+		}
 	}
 
 	return (
 		<div>
-			{isLoading ? (
-				<h2>loading</h2>
-			) : (
-				<>
-					<Pagination
-						postsPerPage={cardsPerPage}
-						totalPosts={data.length}
-						paginate={paginate}
-						currentPage={currentPage}
-					/>
-					<div className={styles.filter}>
-						<Filter setHeroClass={setHeroClass} heroClass="druid" />
-						<Filter setHeroClass={setHeroClass} heroClass="hunter" />
-						<Filter setHeroClass={setHeroClass} heroClass="mage" />
-						<Filter setHeroClass={setHeroClass} heroClass="paladin" />
-						<Filter setHeroClass={setHeroClass} heroClass="priest" />
-						<Filter setHeroClass={setHeroClass} heroClass="rogue" />
-						<Filter setHeroClass={setHeroClass} heroClass="shaman" />
-						<Filter setHeroClass={setHeroClass} heroClass="warlock" />
-						<Filter setHeroClass={setHeroClass} heroClass="warrior" />
-					</div>
-
-					<Cards cards={currentCards} />
-					<Pagination
-						postsPerPage={cardsPerPage}
-						totalPosts={data.length}
-						paginate={paginate}
-						currentPage={currentPage}
-					/>
-				</>
-			)}
+			<>
+				<input
+					type="text"
+					value={search}
+					onChange={(e) => setSearch(e.target.value)}
+					className="flex mx-auto"
+				/>
+				<div className={styles.filter}>
+					<Filter setHeroClass={setHeroClass} heroClass="neutral" />
+					<Filter setHeroClass={setHeroClass} heroClass="druid" />
+					<Filter setHeroClass={setHeroClass} heroClass="hunter" />
+					<Filter setHeroClass={setHeroClass} heroClass="mage" />
+					<Filter setHeroClass={setHeroClass} heroClass="paladin" />
+					<Filter setHeroClass={setHeroClass} heroClass="priest" />
+					<Filter setHeroClass={setHeroClass} heroClass="rogue" />
+					<Filter setHeroClass={setHeroClass} heroClass="shaman" />
+					<Filter setHeroClass={setHeroClass} heroClass="warlock" />
+					<Filter setHeroClass={setHeroClass} heroClass="warrior" />
+				</div>
+				{isLoading || isFetching ? (
+					<div className="text-center">loading</div>
+				) : (
+					<>
+						<Cards cards={currentCards} />
+						<Pagination
+							postsPerPage={cardsPerPage}
+							totalPosts={data.length}
+							paginate={paginate}
+							currentPage={currentPage}
+						/>
+					</>
+				)}
+			</>
 		</div>
 	)
 }

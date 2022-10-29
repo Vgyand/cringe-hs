@@ -6,30 +6,38 @@ export const cardsApi = createApi({
 	reducerPath: 'cardsApi',
 	baseQuery: fetchBaseQuery({
 		baseUrl: 'https://omgvamp-hearthstone-v1.p.rapidapi.com/',
-		headers: {
-			'X-RapidAPI-Key': 'b5ba923c10mshbd3aa1eab6010e2p14b58bjsna1f39361b450',
-			'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com',
-		},
 	}),
 	endpoints: (build) => ({
-		getCardsByClass: build.query({
-			query: (heroClass) => ({
+		getCardsByQuery: build.query({
+			query: (searchState: any) => ({
 				method: 'GET',
-				url: `cards/classes/${heroClass}`,
+				url: `cards${
+					searchState.search
+						? `/search/${searchState.search}`
+						: `${
+								searchState.heroClass
+									? `/classes/${searchState.heroClass}`
+									: '/classes/neutral'
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+						  }`
+				}`,
 				contentType: 'application/json',
+				params: {
+					locale: 'enUS',
+					collectible: '1',
+				},
 				headers: {
-					'X-RapidAPI-Key':
-						'b5ba923c10mshbd3aa1eab6010e2p14b58bjsna1f39361b450',
+					'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
 					'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com',
 				},
 			}),
 			transformResponse(
 				response: any //types(!**)
 			) {
-				return response.filter((el: ICard) => el.img)
+				return response.filter((el: ICard) => el.img && el.cardSet === 'Core')
 			},
 		}),
 	}),
 })
 
-export const { useGetCardsByClassQuery } = cardsApi
+export const { useGetCardsByQueryQuery } = cardsApi

@@ -4,17 +4,16 @@ import styles from './Cards.module.scss'
 
 //types (!**)
 const Cards = ({ cards }: any) => {
-	const handleClickOnCard = (card: ICard, event: Event | undefined): void => {
-		event?.preventDefault()
+	const handleClickOnCard = (card: ICard): void => {
 		console.log(card)
 	}
 	console.log(cards)
 	return (
 		<div className={styles.cards}>
 			{cards.map((el: ICard) => (
-				<a href="/" onClick={() => handleClickOnCard(el, window.event)}>
+				<div key={el.dbfId} onClick={() => handleClickOnCard(el)}>
 					<img className={styles.card} src={el.img} alt="" />
-				</a>
+				</div>
 			))}
 		</div>
 	)

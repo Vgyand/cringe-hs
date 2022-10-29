@@ -27,7 +27,6 @@ const Pagination = ({
 						onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
 							paginate(number, event)
 						}
-						href="/"
 					>
 						{number}
 					</a>
