@@ -1,6 +1,8 @@
+import { FilterType } from '@/shared/types/cardTypes'
+
 import styles from './Filter.module.scss'
 
-const Filter = ({ setHeroClass, heroClass }: any) => {
+const Filter = ({ setHeroClass, heroClass }: FilterType) => {
 	return (
 		<div>
 			<button

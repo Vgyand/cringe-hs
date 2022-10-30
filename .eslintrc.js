@@ -21,6 +21,7 @@ module.exports = {
 		'no-undef': 0,
 		'react/react-in-jsx-scope': 0,
 		'@typescript-eslint/no-inferrable-types': 0,
-		'no-mixed-spaces-and-tabs': 'error',
+		'no-mixed-spaces-and-tabs': 0,
+		'no-non-null-assertion': 0,
 	},
 }

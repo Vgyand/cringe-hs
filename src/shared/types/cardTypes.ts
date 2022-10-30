@@ -1,4 +1,4 @@
-export interface ICard {
+export interface Card {
 	artist: string
 	cardId: string
 	cardSet: string
@@ -12,7 +12,7 @@ export interface ICard {
 	rarity: string
 	type: string
 }
-export interface IPaginationType {
+export interface PaginationType {
 	postsPerPage: number
 	totalPosts: number
 	paginate: (
@@ -20,4 +20,17 @@ export interface IPaginationType {
 		event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
 	) => void
 	currentPage: number
+}
+
+export interface SearchStateTypes {
+	heroClass?: string
+	search?: string
+	cost?: string
+	health?: string
+	attack?: string
+}
+
+export interface FilterType {
+	setHeroClass: (heroClass: string) => void
+	heroClass: string
 }

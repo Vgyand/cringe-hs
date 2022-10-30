@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { toastr } from 'react-redux-toastr'
 
+import { Card, SearchStateTypes } from '@/shared/types/cardTypes'
+
 import { useGetCardsByQueryQuery } from '../../store/cardsApi'
 import Cards from '../Cards/Cards'
 import Filter from '../Filter/Filter'
@@ -12,22 +14,26 @@ const CardsWrapper = () => {
 	const [heroClass, setHeroClass] = useState('')
 	const [search, setSearch] = useState('')
 	const [cost, setCost] = useState('')
-	const searchState: any = {
-		heroClass: heroClass,
-		search: search,
-		cost: cost,
+	const [health, setHealth] = useState('')
+	const [attack, setAttack] = useState('')
+
+	const searchState: SearchStateTypes = {
+		heroClass,
+		search,
+		cost,
+		health,
+		attack,
 	}
-	console.log(searchState)
 	const { data, isLoading, isFetching, error } =
 		useGetCardsByQueryQuery(searchState)
 	const [currentPage, setCurrentPage] = useState(1)
-	const [cardsPerPage] = useState(60)
+	const [cardsPerPage] = useState(25)
 
-	if (isLoading) return <p className="text-center">loading</p>
+	if (isLoading) return <p className="text-center">Loader</p>
 
-	const indexOfLastCard = currentPage * cardsPerPage
-	const indexOfFirdsCard = indexOfLastCard - cardsPerPage
-	const currentCards = data.slice(indexOfFirdsCard, indexOfLastCard)
+	const indexOfLastCard: number = currentPage * cardsPerPage
+	const indexOfFirdsCard: number = indexOfLastCard - cardsPerPage
+	const currentCards: Card = data.slice(indexOfFirdsCard, indexOfLastCard)
 
 	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber)
@@ -67,7 +73,7 @@ const CardsWrapper = () => {
 					<div className="text-center">loading</div>
 				) : (
 					<>
-						<Cards cards={currentCards} />
+						<Cards currentCards={currentCards} />
 						<Pagination
 							postsPerPage={cardsPerPage}
 							totalPosts={data.length}

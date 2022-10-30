@@ -1,4 +1,4 @@
-import { IPaginationType } from '@/shared/types/cardTypes'
+import { PaginationType } from '@/shared/types/cardTypes'
 
 import styles from './Paginations.module.scss'
 
@@ -7,7 +7,7 @@ const Pagination = ({
 	totalPosts,
 	paginate,
 	currentPage,
-}: IPaginationType) => {
+}: PaginationType) => {
 	const pageNumbers: Array<number> = []
 	for (let i: number = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
 		pageNumbers.push(i)

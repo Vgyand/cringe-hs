@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toastr } from 'react-redux-toastr'
 import { useNavigate } from 'react-router-dom'
 
-import { IAuthTypes } from '../../shared/types/authTypes'
+import { AuthTypes } from '../../shared/types/authTypes'
 
 import styles from './Login.module.scss'
 
@@ -14,11 +14,11 @@ const Login = () => {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<IAuthTypes>({
+	} = useForm<AuthTypes>({
 		mode: 'onBlur',
 	})
 
-	const onSubmit: SubmitHandler<IAuthTypes> = async (data) => {
+	const onSubmit: SubmitHandler<AuthTypes> = async (data) => {
 		try {
 			await signIn(data.email, data.password)
 			toastr.success('User has been succsesfully logged in', `${data.email}`)
