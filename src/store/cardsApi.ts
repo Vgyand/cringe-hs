@@ -2,6 +2,14 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { Card, SearchStateTypes } from '@/shared/types/cardTypes'
 
+interface ParamsType {
+	locale: string
+	collectible: string
+	cost?: string
+	health?: string
+	attack?: string
+}
+
 export const cardsApi = createApi({
 	reducerPath: 'cardsApi',
 	baseQuery: fetchBaseQuery({
@@ -10,19 +18,15 @@ export const cardsApi = createApi({
 	endpoints: (build) => ({
 		getCardsByQuery: build.query({
 			query: (searchState: SearchStateTypes) => {
-				let params = {}
-				if (searchState.search && searchState.cost) {
-					params = {
-						locale: 'enUs',
-						collectible: '1',
-						cost: searchState.cost,
-					}
-				} else {
-					params = {
-						locale: 'enUs',
-						collectible: '1',
-					}
+				const params: ParamsType = {
+					locale: 'enUs',
+					collectible: '1',
 				}
+				console.log(searchState.search, searchState.cost)
+				if (searchState.cost) params.cost = searchState.cost
+				if (searchState.attack) params.attack = searchState.attack
+				if (searchState.health) params.health = searchState.health
+				console.log(params)
 				return {
 					method: 'GET',
 					url: `cards${
@@ -42,10 +46,16 @@ export const cardsApi = createApi({
 					},
 				}
 			},
-			transformResponse(
-				response: any //types(!**)
-			) {
-				return response.filter((el: Card) => el.img && el.cardSet === 'Core')
+			transformResponse(response: any) {
+				return response.filter(
+					(el: Card) =>
+						el.img &&
+						(el.cardSet === 'Core' ||
+							el.cardSet === 'Knights of the Frozen Throne' ||
+							el.cardSet === 'The Grand Tournament' ||
+							el.cardSet === 'League of Explorers' ||
+							el.cardSet === 'The Boomsday Project')
+				)
 			},
 		}),
 	}),

@@ -3,10 +3,14 @@ import { toastr } from 'react-redux-toastr'
 
 import { Card, SearchStateTypes } from '@/shared/types/cardTypes'
 
+import attackImg from '../../assets/attack.png'
+import healthImg from '../../assets/health.png'
+import manaImg from '../../assets/mana.png'
 import { useGetCardsByQueryQuery } from '../../store/cardsApi'
 import Cards from '../Cards/Cards'
-import Filter from '../Filter/Filter'
+import FilterWrapper from '../FilterWrapper/FilterWrapper'
 import Pagination from '../Pagination/Pagination'
+import Dropdown from '../ui/Dropdown/Dropdown'
 
 import styles from './CardsWrapper.module.scss'
 
@@ -24,6 +28,7 @@ const CardsWrapper = () => {
 		health,
 		attack,
 	}
+	console.log(searchState)
 	const { data, isLoading, isFetching, error } =
 		useGetCardsByQueryQuery(searchState)
 	const [currentPage, setCurrentPage] = useState(1)
@@ -48,27 +53,59 @@ const CardsWrapper = () => {
 		}
 	}
 
+	const options: { value: string; label: string }[] = [
+		{ value: '', label: '' },
+		{ value: '1', label: '1' },
+		{ value: '2', label: '2' },
+		{ value: '3', label: '3' },
+		{ value: '4', label: '4' },
+		{ value: '5', label: '5' },
+		{ value: '6', label: '6' },
+		{ value: '7', label: '7' },
+		{ value: '8', label: '8' },
+		{ value: '9', label: '9' },
+	]
+
 	return (
-		<div>
+		<div className={styles.cards}>
 			<>
 				<input
 					type="text"
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
-					className="flex mx-auto"
+					className={styles.input}
+					placeholder="Search for cards"
 				/>
 				<div className={styles.filter}>
-					<Filter setHeroClass={setHeroClass} heroClass="neutral" />
-					<Filter setHeroClass={setHeroClass} heroClass="druid" />
-					<Filter setHeroClass={setHeroClass} heroClass="hunter" />
-					<Filter setHeroClass={setHeroClass} heroClass="mage" />
-					<Filter setHeroClass={setHeroClass} heroClass="paladin" />
-					<Filter setHeroClass={setHeroClass} heroClass="priest" />
-					<Filter setHeroClass={setHeroClass} heroClass="rogue" />
-					<Filter setHeroClass={setHeroClass} heroClass="shaman" />
-					<Filter setHeroClass={setHeroClass} heroClass="warlock" />
-					<Filter setHeroClass={setHeroClass} heroClass="warrior" />
+					<FilterWrapper setHeroClass={setHeroClass} heroClass={''} img={''} />
 				</div>
+				<div className="flex justify-center">
+					<div className={styles.dropdown}>
+						<img src={manaImg} alt="cost" />
+						<Dropdown
+							options={options}
+							selectedOption={cost}
+							setSelectedOption={setCost}
+						/>
+					</div>
+					<div className={styles.dropdown}>
+						<img src={healthImg} alt="cost" />
+						<Dropdown
+							options={options}
+							selectedOption={health}
+							setSelectedOption={setHealth}
+						/>
+					</div>
+					<div className={styles.dropdown}>
+						<img src={attackImg} alt="cost" />
+						<Dropdown
+							options={options}
+							selectedOption={attack}
+							setSelectedOption={setAttack}
+						/>
+					</div>
+				</div>
+
 				{isLoading || isFetching ? (
 					<div className="text-center">loading</div>
 				) : (

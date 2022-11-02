@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export interface Card {
 	artist: string
 	cardId: string
@@ -25,12 +27,19 @@ export interface PaginationType {
 export interface SearchStateTypes {
 	heroClass?: string
 	search?: string
-	cost?: string
+	cost?: string | undefined
 	health?: string
 	attack?: string
 }
 
 export interface FilterType {
-	setHeroClass: (heroClass: string) => void
+	setHeroClass: Dispatch<SetStateAction<string>>
 	heroClass: string
+	img: string
+}
+
+export interface DropdownTypes {
+	options: { value: string; label: string }[]
+	selectedOption: string
+	setSelectedOption: Dispatch<SetStateAction<string>>
 }
