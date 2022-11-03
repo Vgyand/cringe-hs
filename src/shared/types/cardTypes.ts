@@ -24,7 +24,7 @@ export interface PaginationType {
 	currentPage: number
 }
 
-export interface SearchStateTypes {
+export interface SearchParamsTypes {
 	heroClass?: string
 	search?: string
 	cost?: string | undefined

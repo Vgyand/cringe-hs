@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { Card, SearchStateTypes } from '@/shared/types/cardTypes'
+import { Card, SearchParamsTypes } from '@/shared/types/cardTypes'
 
 interface ParamsType {
 	locale: string
@@ -17,7 +17,7 @@ export const cardsApi = createApi({
 	}),
 	endpoints: (build) => ({
 		getCardsByQuery: build.query({
-			query: (searchState: SearchStateTypes) => {
+			query: (searchState: SearchParamsTypes) => {
 				const params: ParamsType = {
 					locale: 'enUs',
 					collectible: '1',
@@ -26,7 +26,6 @@ export const cardsApi = createApi({
 				if (searchState.cost) params.cost = searchState.cost
 				if (searchState.attack) params.attack = searchState.attack
 				if (searchState.health) params.health = searchState.health
-				console.log(params)
 				return {
 					method: 'GET',
 					url: `cards${
@@ -39,7 +38,7 @@ export const cardsApi = createApi({
 							  }`
 					}`,
 					contentType: 'application/json',
-					params: params,
+					params,
 					headers: {
 						'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
 						'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com',
@@ -50,11 +49,13 @@ export const cardsApi = createApi({
 				return response.filter(
 					(el: Card) =>
 						el.img &&
-						(el.cardSet === 'Core' ||
-							el.cardSet === 'Knights of the Frozen Throne' ||
-							el.cardSet === 'The Grand Tournament' ||
-							el.cardSet === 'League of Explorers' ||
-							el.cardSet === 'The Boomsday Project')
+						el.cardSet.includes(
+							'Core' ||
+								'The Grand Tournament' ||
+								'The Boomsday Project' ||
+								'League of Explorers' ||
+								'Knights of the Frozen Throne'
+						)
 				)
 			},
 		}),

@@ -14,48 +14,63 @@ import warriorImg from '../../assets/HeroClasses/Warrior_icon.webp'
 import Filter from './Filter/Filter'
 import styles from './FilterWrapper.module.scss'
 
+const filterData = [
+	{
+		heroImg: druidImg,
+		heroClass: 'druid',
+	},
+	{
+		heroImg: hunterImg,
+		heroClass: 'hunter',
+	},
+	{
+		heroImg: mageImg,
+		heroClass: 'mage',
+	},
+	{
+		heroImg: paladinImg,
+		heroClass: 'paladin',
+	},
+	{
+		heroImg: priestImg,
+		heroClass: 'priest',
+	},
+	{
+		heroImg: rogueImg,
+		heroClass: 'rogue',
+	},
+	{
+		heroImg: shamanImg,
+		heroClass: 'shaman',
+	},
+	{
+		heroImg: warlockImg,
+		heroClass: 'warlock',
+	},
+	{
+		heroImg: warriorImg,
+		heroClass: 'warrior',
+	},
+	{
+		heroImg: neutralImg,
+		heroClass: 'neutral',
+	},
+]
+
 const FilterWrapper = ({ setHeroClass }: FilterType) => {
 	return (
 		<div className={styles.filters}>
 			<div className={styles.filterByClass}>
-				<Filter
-					setHeroClass={setHeroClass}
-					heroClass="neutral"
-					img={neutralImg}
-				/>
-				<Filter setHeroClass={setHeroClass} heroClass="druid" img={druidImg} />
-				<Filter
-					setHeroClass={setHeroClass}
-					heroClass="hunter"
-					img={hunterImg}
-				/>
-				<Filter setHeroClass={setHeroClass} heroClass="mage" img={mageImg} />
-				<Filter
-					setHeroClass={setHeroClass}
-					heroClass="paladin"
-					img={paladinImg}
-				/>
-				<Filter
-					setHeroClass={setHeroClass}
-					heroClass="priest"
-					img={priestImg}
-				/>
-				<Filter setHeroClass={setHeroClass} heroClass="rogue" img={rogueImg} />
-				<Filter
-					setHeroClass={setHeroClass}
-					heroClass="shaman"
-					img={shamanImg}
-				/>
-				<Filter
-					setHeroClass={setHeroClass}
-					heroClass="warlock"
-					img={warlockImg}
-				/>
-				<Filter
-					setHeroClass={setHeroClass}
-					heroClass="warrior"
-					img={warriorImg}
-				/>
+				{filterData.map(
+					(el: { heroImg: string; heroClass: string }, index: number) => (
+						<Filter
+							key={index}
+							setHeroClass={setHeroClass}
+							heroClass={el.heroClass}
+							img={el.heroImg}
+						/>
+					)
+				)}
 			</div>
 		</div>
 	)

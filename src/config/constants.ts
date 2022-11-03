@@ -1,4 +1,7 @@
-export const RegX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+export const EmailValidationReg = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+
+export const cardsOnPage = 25
+
 export const options: { value: string; label: string }[] = [
 	{ value: '', label: '' },
 	{ value: '1', label: '1' },

@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { toastr } from 'react-redux-toastr'
 
-import { Card, SearchStateTypes } from '@/shared/types/cardTypes'
+import { SearchParamsTypes } from '@/shared/types/cardTypes'
 
 import attackImg from '../../assets/attack.png'
 import healthImg from '../../assets/health.png'
 import manaImg from '../../assets/mana.png'
+import { cardsOnPage, options } from '../../config/constants'
 import { useGetCardsByQueryQuery } from '../../store/cardsApi'
 import Cards from '../Cards/Cards'
 import FilterWrapper from '../FilterWrapper/FilterWrapper'
@@ -21,24 +22,24 @@ const CardsWrapper = () => {
 	const [health, setHealth] = useState('')
 	const [attack, setAttack] = useState('')
 
-	const searchState: SearchStateTypes = {
+	const searchParams: SearchParamsTypes = {
 		heroClass,
 		search,
 		cost,
 		health,
 		attack,
 	}
-	console.log(searchState)
+	console.log(searchParams)
 	const { data, isLoading, isFetching, error } =
-		useGetCardsByQueryQuery(searchState)
+		useGetCardsByQueryQuery(searchParams)
 	const [currentPage, setCurrentPage] = useState(1)
-	const [cardsPerPage] = useState(25)
+	const [cardsPerPage] = useState(cardsOnPage)
 
 	if (isLoading) return <p className="text-center">Loader</p>
 
-	const indexOfLastCard: number = currentPage * cardsPerPage
-	const indexOfFirdsCard: number = indexOfLastCard - cardsPerPage
-	const currentCards: Card = data.slice(indexOfFirdsCard, indexOfLastCard)
+	const indexOfLastCard = currentPage * cardsPerPage
+	const indexOfFirdsCard = indexOfLastCard - cardsPerPage
+	const cards = data.slice(indexOfFirdsCard, indexOfLastCard)
 
 	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber)
@@ -52,19 +53,6 @@ const CardsWrapper = () => {
 			return <div>{error.message}</div>
 		}
 	}
-
-	const options: { value: string; label: string }[] = [
-		{ value: '', label: '' },
-		{ value: '1', label: '1' },
-		{ value: '2', label: '2' },
-		{ value: '3', label: '3' },
-		{ value: '4', label: '4' },
-		{ value: '5', label: '5' },
-		{ value: '6', label: '6' },
-		{ value: '7', label: '7' },
-		{ value: '8', label: '8' },
-		{ value: '9', label: '9' },
-	]
 
 	return (
 		<div className={styles.cards}>
@@ -110,7 +98,7 @@ const CardsWrapper = () => {
 					<div className="text-center">loading</div>
 				) : (
 					<>
-						<Cards currentCards={currentCards} />
+						<Cards cards={cards} />
 						<Pagination
 							postsPerPage={cardsPerPage}
 							totalPosts={data.length}

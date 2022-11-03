@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { AuthTypes } from '@/shared/types/authTypes'
 
-import { RegX } from '../../config/constants'
+import { EmailValidationReg } from '../../config/constants'
 
 import styles from './Register.module.scss'
 
@@ -40,7 +40,7 @@ const Register = () => {
 						{...register('email', {
 							required: 'Is required',
 							pattern: {
-								value: RegX,
+								value: EmailValidationReg,
 								message: 'invalid email address',
 							},
 						})}
