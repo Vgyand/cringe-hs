@@ -1,7 +1,7 @@
-export interface IAuthTypes {
+export interface AuthTypes {
 	email: string
 	password: string
 }
-export interface IProtectedType {
+export interface ProtectedType {
 	children: JSX.Element
 }

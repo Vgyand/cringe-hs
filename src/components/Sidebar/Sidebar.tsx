@@ -16,9 +16,7 @@ const Sidebar = () => {
 			await logout()
 			toastr.success('User has been succesfully loggen out', 'logged out')
 			navigate('/')
-		} catch (
-			e: any //error type (!**)
-		) {
+		} catch (e: any) {
 			toastr.error(`${e.code}`, 'error')
 		}
 	}
@@ -27,8 +25,14 @@ const Sidebar = () => {
 		<div className={styles.sidebar}>
 			<Logo />
 			<h1 className="text-center">CringeHS</h1>
-			{user ? 'logged in menu will be implemented' : <Menu />}
-			{user ? <button onClick={handleLogout}>logout</button> : 'not autherized'}
+			{user ? <p>{user.email}</p> : <Menu />}
+			{user ? (
+				<button className="text-center" onClick={handleLogout}>
+					logout
+				</button>
+			) : (
+				'not autherized'
+			)}
 			<br />
 		</div>
 	)

@@ -39,7 +39,7 @@ export const AuthContextProvider: FC<IAuthTypesContext> = ({ children }) => {
 	}
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
+		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
 			console.log(currentUser)
 			setUser(currentUser)
 		})

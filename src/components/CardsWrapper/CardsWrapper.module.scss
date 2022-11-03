@@ -6,3 +6,17 @@
 	margin: 0 auto;
 	justify-content: center;
 }
+.cards {
+	padding-top: 25px;
+}
+.input {
+	@apply mx-auto flex p-2;
+	width: 350px;
+}
+.dropdown {
+	display: flex;
+	margin-left: 20px;
+	img {
+		width: 25px;
+	}
+}

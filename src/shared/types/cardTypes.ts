@@ -1,4 +1,6 @@
-export interface ICard {
+import { Dispatch, SetStateAction } from 'react'
+
+export interface Card {
 	artist: string
 	cardId: string
 	cardSet: string
@@ -12,7 +14,7 @@ export interface ICard {
 	rarity: string
 	type: string
 }
-export interface IPaginationType {
+export interface PaginationType {
 	postsPerPage: number
 	totalPosts: number
 	paginate: (
@@ -20,4 +22,24 @@ export interface IPaginationType {
 		event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
 	) => void
 	currentPage: number
+}
+
+export interface SearchParamsTypes {
+	heroClass?: string
+	search?: string
+	cost?: string | undefined
+	health?: string
+	attack?: string
+}
+
+export interface FilterType {
+	setHeroClass: Dispatch<SetStateAction<string>>
+	heroClass: string
+	img: string
+}
+
+export interface DropdownTypes {
+	options: { value: string; label: string }[]
+	selectedOption: string
+	setSelectedOption: Dispatch<SetStateAction<string>>
 }

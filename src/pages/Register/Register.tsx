@@ -3,9 +3,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toastr } from 'react-redux-toastr'
 import { useNavigate } from 'react-router-dom'
 
-import { IAuthTypes } from '@/shared/types/authTypes'
+import { AuthTypes } from '@/shared/types/authTypes'
 
-import { RegX } from '../../config/constants'
+import { EmailValidationReg } from '../../config/constants'
 
 import styles from './Register.module.scss'
 
@@ -16,11 +16,11 @@ const Register = () => {
 		register,
 		formState: { errors },
 		handleSubmit,
-	} = useForm<IAuthTypes>({
+	} = useForm<AuthTypes>({
 		mode: 'onBlur',
 	})
 
-	const onSubmit: SubmitHandler<IAuthTypes> = async (data) => {
+	const onSubmit: SubmitHandler<AuthTypes> = async (data) => {
 		try {
 			await createUser(data.email, data.password)
 			toastr.success('User has been registered', `${data.email}`)
@@ -40,7 +40,7 @@ const Register = () => {
 						{...register('email', {
 							required: 'Is required',
 							pattern: {
-								value: RegX,
+								value: EmailValidationReg,
 								message: 'invalid email address',
 							},
 						})}
