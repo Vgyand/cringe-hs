@@ -1,12 +1,11 @@
 import Button from '../../ui/Button/Button'
 
-const Menu = () => {
+const MenuAuth = () => {
 	return (
 		<div>
-			<Button type="button" text="Log In" to="/login" />
-			<Button type="button" text="Sign Up" to="/register" />
+			<Button type="button" text="Favorites" to="/favorites" />
 		</div>
 	)
 }
 
-export default Menu
+export default MenuAuth

@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar/Sidebar'
 import { ProtectedRoute } from '../services/ProtectedRoute'
 
 import Account from './Account/Account'
+import Favorites from './Favorites/Favorites'
 import Login from './Login/Login'
 import MainPage from './MainPage'
 import Register from './Register/Register'
@@ -22,6 +23,14 @@ const App = () => {
 					element={
 						<ProtectedRoute>
 							<Account />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/favorites"
+					element={
+						<ProtectedRoute>
+							<Favorites />
 						</ProtectedRoute>
 					}
 				/>

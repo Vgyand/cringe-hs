@@ -4,10 +4,11 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import './index.scss'
 import Meta from './services/Meta'
-import { store } from './store/store'
+import { persistor, store } from './store/store'
 import ReduxToast from './utils/toastr/ReduxToast'
 
 const container = document.getElementById('root')!
@@ -17,12 +18,14 @@ root.render(
 	<BrowserRouter>
 		<React.StrictMode>
 			<AuthContextProvider>
-				<Provider store={store}>
-					<ReduxToast />
-					<Meta title="Cringe HS" desc="Hearthstone cards">
-						<App />
-					</Meta>
-				</Provider>
+				<PersistGate loading={<p>loading...</p>} persistor={persistor}>
+					<Provider store={store}>
+						<ReduxToast />
+						<Meta title="Cringe HS" desc="Hearthstone cards">
+							<App />
+						</Meta>
+					</Provider>
+				</PersistGate>
 			</AuthContextProvider>
 		</React.StrictMode>
 	</BrowserRouter>

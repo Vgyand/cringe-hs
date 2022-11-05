@@ -1,0 +1,28 @@
+.modal {
+	position: absolute;
+	width: 95%;
+	height: 95%;
+	top: 5%;
+	background-color: rgba(0, 0, 0, 0.9);
+	color: white;
+	z-index: 10;
+	border-radius: 30px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	padding: 30px;
+}
+.modal_flavor {
+	font-size: 12px;
+}
+.modal_btn {
+	@apply px-10 py-2;
+	background-color: #860049 !important;
+	border-radius: 0.65rem;
+	transition: 0.3s ease-in-out;
+	font-size: 14px;
+	&:hover {
+		background-color: red !important;
+	}
+}

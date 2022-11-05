@@ -1,19 +1,23 @@
 import { Card } from '@/shared/types/cardTypes'
 
+import CardImg from '../ui/CardImg/CardImg'
+
 import styles from './Cards.module.scss'
 
 //types (!**)
 const Cards = ({ cards }: any) => {
-	const handleClickOnCard = (card: Card): void => {
-		console.log(card)
-	}
-	console.log(cards)
 	return (
 		<div className={styles.cards}>
 			{cards.map((el: Card) => (
-				<div key={el.dbfId} onClick={() => handleClickOnCard(el)}>
-					<img className={styles.card} src={el.img} alt="" />
-				</div>
+				<CardImg
+					img={el.img}
+					name={el.name}
+					cardSet={el.cardSet}
+					artist={el.artist}
+					flavor={el.flavor}
+					id={el.dbfId}
+					key={el.dbfId}
+				/>
 			))}
 		</div>
 	)
