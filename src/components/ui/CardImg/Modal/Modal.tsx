@@ -1,6 +1,3 @@
-import { useUserAuth } from 'providers/AuthProvider'
-import { toastr } from 'react-redux-toastr'
-
 import { ModalType } from '@/shared/types/cardTypes'
 
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
@@ -16,14 +13,12 @@ const Modal = ({ artist, cardSet, flavor, name, id, img }: ModalType) => {
 	const favoriteCardsData = useAppSelector((state) => state.favorite)
 	const ids = favoriteCardsData.map((el) => el.id)
 	const dispatch = useAppDispatch()
-	const { user } = useUserAuth()
 	const handleAddFavorites = async () => {
 		const cardData: FavoritesState = {
 			id,
 			img,
 			name,
 		}
-		toastr.success('Success', 'Card has been added to your favorites')
 		dispatch(addedToFavorite(cardData))
 	}
 	const handleRemoveFromFavorites = () => {
@@ -32,7 +27,6 @@ const Modal = ({ artist, cardSet, flavor, name, id, img }: ModalType) => {
 			img,
 			name,
 		}
-		toastr.success('Success', 'Card has been removed from your favorites')
 		dispatch(removedFromFavorite(cardData))
 	}
 
@@ -42,7 +36,9 @@ const Modal = ({ artist, cardSet, flavor, name, id, img }: ModalType) => {
 			<p>Artist: {artist}</p>
 			<p>Card Set: {cardSet}</p>
 			<p className={styles.modal_flavor}>{flavor}</p>
-			{/* {user ? ( */}
+
+			{/* {user ? ( */
+			/*По моему лучше убрать ui и чем давать возможность диспатчить, хоть и защищенные, экшены*/}
 			<div>
 				{ids.includes(id) ? (
 					<button onClick={handleRemoveFromFavorites} className="text-primary">

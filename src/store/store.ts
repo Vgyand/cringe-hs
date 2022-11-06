@@ -19,7 +19,7 @@ import storage from 'redux-persist/lib/storage'
 
 import { cardsApi } from './cardsApi'
 import { favorite } from './favoritesSlice'
-import { AuthProtection } from './middleware/AuthProtection'
+import { authProtection } from './middleware/authProtection'
 
 const rootReducer = combineReducers({
 	[cardsApi.reducerPath]: cardsApi.reducer,
@@ -40,7 +40,7 @@ export const store = configureStore({
 			serializableCheck: {
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
-		}).concat(cardsApi.middleware, AuthProtection),
+		}).concat(cardsApi.middleware, authProtection),
 	devTools: true,
 })
 
