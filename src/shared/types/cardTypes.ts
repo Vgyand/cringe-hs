@@ -13,6 +13,7 @@ export interface Card {
 	playerClass: string
 	rarity: string
 	type: string
+	flavor: string
 }
 export interface PaginationType {
 	postsPerPage: number
@@ -42,4 +43,13 @@ export interface DropdownTypes {
 	options: { value: string; label: string }[]
 	selectedOption: string
 	setSelectedOption: Dispatch<SetStateAction<string>>
+}
+
+export interface ModalType {
+	artist: string
+	cardSet: string
+	flavor: string
+	name: string
+	id: number
+	img: string
 }

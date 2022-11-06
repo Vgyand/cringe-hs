@@ -4,7 +4,8 @@ import { toastr } from 'react-redux-toastr'
 import { useNavigate } from 'react-router-dom'
 
 import Logo from './Logo/Logo'
-import Menu from './MenuAuth/MenuAuth'
+import Menu from './Menu/Menu'
+import MenuAuth from './MenuAuth/MenuAuth'
 import styles from './Sidebar.module.scss'
 
 const Sidebar = () => {
@@ -12,13 +13,9 @@ const Sidebar = () => {
 	const navigate = useNavigate()
 
 	const handleLogout = async () => {
-		try {
-			await logout()
-			toastr.success('User has been succesfully loggen out', 'logged out')
-			navigate('/')
-		} catch (e: any) {
-			toastr.error(`${e.code}`, 'error')
-		}
+		await logout()
+		toastr.success('User has been succesfully loggen out', 'logged out')
+		navigate('/login')
 	}
 
 	return (
@@ -27,9 +24,12 @@ const Sidebar = () => {
 			<h1 className="text-center">CringeHS</h1>
 			{user ? <p>{user.email}</p> : <Menu />}
 			{user ? (
-				<button className="text-center" onClick={handleLogout}>
-					logout
-				</button>
+				<>
+					<MenuAuth />
+					<button className="text-center" onClick={handleLogout}>
+						logout
+					</button>
+				</>
 			) : (
 				'not autherized'
 			)}

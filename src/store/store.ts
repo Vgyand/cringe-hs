@@ -1,14 +1,50 @@
-import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
+import {
+	Action,
+	ThunkAction,
+	combineReducers,
+	configureStore,
+} from '@reduxjs/toolkit'
+import { reducer as toastrReducer } from 'react-redux-toastr'
+import {
+	FLUSH,
+	PAUSE,
+	PERSIST,
+	PURGE,
+	REGISTER,
+	REHYDRATE,
+	persistReducer,
+	persistStore,
+} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
 import { cardsApi } from './cardsApi'
-import { reducers } from './rootReducert'
+import { favorite } from './favoritesSlice'
+import { authProtection } from './middleware/authProtection'
+
+const rootReducer = combineReducers({
+	[cardsApi.reducerPath]: cardsApi.reducer,
+	favorite,
+	toastr: toastrReducer,
+})
+const persistConfig = {
+	key: 'root',
+	storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-	reducer: reducers,
+	reducer: persistedReducer,
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(cardsApi.middleware),
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+			},
+		}).concat(cardsApi.middleware, authProtection),
 	devTools: true,
 })
+
+export const persistor = persistStore(store)
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>

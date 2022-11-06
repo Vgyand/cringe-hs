@@ -29,7 +29,6 @@ const CardsWrapper = () => {
 		health,
 		attack,
 	}
-	console.log(searchParams)
 	const { data, isLoading, isFetching, error } =
 		useGetCardsByQueryQuery(searchParams)
 	const [currentPage, setCurrentPage] = useState(1)
