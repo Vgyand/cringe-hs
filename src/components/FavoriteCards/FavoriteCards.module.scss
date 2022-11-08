@@ -1,4 +1,23 @@
 .cards {
-	margin-left: 20%;
-	display: flex;
+	margin-left: 25%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	img {
+		width: 100%;
+	}
+}
+.card {
+	position: relative;
+}
+.cardRemove {
+	position: absolute;
+	top: 10%;
+	right: 15%;
+	font-size: 32px;
+	padding-top: 0;
+	padding-bottom: 0;
+	&:hover {
+		color: white;
+		cursor: pointer;
+	}
 }

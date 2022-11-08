@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toastr } from 'react-redux-toastr'
 
 import { SearchParamsTypes } from '@/shared/types/cardTypes'
@@ -7,6 +7,7 @@ import attackImg from '../../assets/attack.png'
 import healthImg from '../../assets/health.png'
 import manaImg from '../../assets/mana.png'
 import { cardsOnPage, options } from '../../config/constants'
+import { useDebounce } from '../../hooks/hooks'
 import { useGetCardsByQueryQuery } from '../../store/cardsApi'
 import Cards from '../Cards/Cards'
 import FilterWrapper from '../FilterWrapper/FilterWrapper'
@@ -21,14 +22,15 @@ const CardsWrapper = () => {
 	const [cost, setCost] = useState('')
 	const [health, setHealth] = useState('')
 	const [attack, setAttack] = useState('')
-
+	const debouncedSearch = useDebounce(search, 1000)
 	const searchParams: SearchParamsTypes = {
 		heroClass,
-		search,
+		filteredSearch: debouncedSearch,
 		cost,
 		health,
 		attack,
 	}
+
 	const { data, isLoading, isFetching, error } =
 		useGetCardsByQueryQuery(searchParams)
 	const [currentPage, setCurrentPage] = useState(1)
@@ -46,8 +48,7 @@ const CardsWrapper = () => {
 
 	if (error) {
 		if ('status' in error) {
-			const errMsg = 'error' in error ? error.error : JSON.stringify(error.data)
-			toastr.error(errMsg, 'no such card')
+			toastr.error('Card not found', 'no such card')
 		} else {
 			return <div>{error.message}</div>
 		}

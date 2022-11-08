@@ -6,6 +6,7 @@ import { ProtectedRoute } from '../services/ProtectedRoute'
 
 import Account from './Account/Account'
 import Favorites from './Favorites/Favorites'
+import History from './History/History'
 import Login from './Login/Login'
 import MainPage from './MainPage'
 import Register from './Register/Register'
@@ -26,11 +27,21 @@ const App = () => {
 						</ProtectedRoute>
 					}
 				/>
+
 				<Route
 					path="/favorites"
 					element={
 						<ProtectedRoute>
 							<Favorites />
+						</ProtectedRoute>
+					}
+				/>
+
+				<Route
+					path="/favorites"
+					element={
+						<ProtectedRoute>
+							<History />
 						</ProtectedRoute>
 					}
 				/>

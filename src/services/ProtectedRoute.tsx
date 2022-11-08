@@ -1,5 +1,6 @@
 import { useUserAuth } from 'providers/AuthProvider'
-import { useNavigate } from 'react-router-dom'
+import { toastr } from 'react-redux-toastr'
+import { Navigate } from 'react-router-dom'
 
 interface IAuthContextProps {
 	children: JSX.Element
@@ -7,11 +8,9 @@ interface IAuthContextProps {
 
 export const ProtectedRoute = ({ children }: IAuthContextProps) => {
 	const { user } = useUserAuth()
-	const navigate = useNavigate()
-
 	if (!user) {
-		navigate('/login')
-		return null
+		toastr.error('Please', 'Register')
+		return <Navigate to="/register" />
 	}
 
 	return children

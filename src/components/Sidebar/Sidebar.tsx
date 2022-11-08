@@ -26,12 +26,12 @@ const Sidebar = () => {
 			{user ? (
 				<>
 					<MenuAuth />
-					<button className="text-center" onClick={handleLogout}>
+					<button className={styles.logoutBtn} onClick={handleLogout}>
 						logout
 					</button>
 				</>
 			) : (
-				'not autherized'
+				''
 			)}
 			<br />
 		</div>

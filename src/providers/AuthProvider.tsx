@@ -35,12 +35,12 @@ export const AuthContextProvider: FC<IAuthTypesContext> = ({ children }) => {
 	}
 
 	const logout = () => {
+		localStorage.removeItem('cards')
 		return signOut(auth)
 	}
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-			console.log(currentUser)
 			setUser(currentUser)
 		})
 		return () => {
