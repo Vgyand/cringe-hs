@@ -21,7 +21,7 @@ const FavoriteCards = () => {
 	return (
 		<div className={styles.cards}>
 			{cards.length ? (
-				cards.map((el: FavoriteCard) => (
+				cards.map((el) => (
 					<div key={el.id} className={styles.card}>
 						<span
 							onClick={() => handleRemoveFromFavorites(el.id, el.img, el.name)}

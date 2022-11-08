@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { Suspense, lazy } from 'react'
+import { Suspense } from 'react'
 
 import styles from './CardImg.module.scss'
 
-interface CardImgType {
+interface Props {
 	img: string
 	name: string
 	artist: string
@@ -15,7 +15,7 @@ interface CardImgType {
 
 const Modal = React.lazy(() => import('./Modal/Modal'))
 
-const CardImg = ({ img, name, artist, flavor, cardSet, id }: CardImgType) => {
+const CardImg = ({ img, name, artist, flavor, cardSet, id }: Props) => {
 	const [open, setOpen] = useState(false)
 	return (
 		<div onClick={() => setOpen(!open)} className={styles.cardItem}>

@@ -22,14 +22,10 @@ const CardsWrapper = () => {
 	const [cost, setCost] = useState('')
 	const [health, setHealth] = useState('')
 	const [attack, setAttack] = useState('')
-	const debouncedValue = useDebounce(search, 1000)
-
-	const [filteredSearch, setFilteredSearch] = useState(debouncedValue)
-
-	console.log(debouncedValue)
+	const debouncedSearch = useDebounce(search, 1000)
 	const searchParams: SearchParamsTypes = {
 		heroClass,
-		filteredSearch,
+		filteredSearch: debouncedSearch,
 		cost,
 		health,
 		attack,
@@ -39,10 +35,6 @@ const CardsWrapper = () => {
 		useGetCardsByQueryQuery(searchParams)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [cardsPerPage] = useState(cardsOnPage)
-
-	useEffect(() => {
-		setFilteredSearch(debouncedValue)
-	}, [debouncedValue])
 
 	if (isLoading) return <p className="text-center">Loader</p>
 
