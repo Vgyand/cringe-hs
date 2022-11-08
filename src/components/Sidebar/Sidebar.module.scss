@@ -6,3 +6,15 @@
 	color: white;
 	position: fixed;
 }
+.logoutBtn {
+	@apply px-10 py-2;
+	background-color: #860049 !important;
+	border-radius: 0.65rem;
+	margin-left: 50px;
+	margin-top: 20px;
+	transition: 0.3s ease-in-out;
+	width: 150px;
+	&:hover {
+		background-color: red !important;
+	}
+}

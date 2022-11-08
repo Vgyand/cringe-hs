@@ -4,7 +4,6 @@ import CardImg from '../ui/CardImg/CardImg'
 
 import styles from './Cards.module.scss'
 
-//types (!**)
 const Cards = ({ cards }: any) => {
 	return (
 		<div className={styles.cards}>

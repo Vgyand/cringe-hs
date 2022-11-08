@@ -34,7 +34,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		"src/providers/AuthProvider.tsx",
-		"src/store/cardsApi.ts"
+		"src/store/cardsApi.ts",
+		"src/components/ui/Button/Button.jsx"
 	],
 	"exclude": ["node_modules"]
 }

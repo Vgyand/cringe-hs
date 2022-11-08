@@ -28,6 +28,7 @@ export interface PaginationType {
 export interface SearchParamsTypes {
 	heroClass?: string
 	search?: string
+	filteredSearch?: string
 	cost?: string | undefined
 	health?: string
 	attack?: string
@@ -52,4 +53,9 @@ export interface ModalType {
 	name: string
 	id: number
 	img: string
+}
+export interface FavoriteCard {
+	img: string
+	id: number
+	name: string
 }
