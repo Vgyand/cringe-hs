@@ -59,7 +59,38 @@ export const cardsApi = createApi({
 				)
 			},
 		}),
+		getCardByQuery: build.query({
+			query: (searchState: SearchParamsTypes) => {
+				const params: ParamsType = {
+					locale: 'enUs',
+					collectible: '1',
+				}
+				return {
+					method: 'GET',
+					url: `cards/${searchState.filteredSearch}`,
+					contentType: 'application/json',
+					params,
+					headers: {
+						'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+						'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com',
+					},
+				}
+			},
+			transformResponse(response: any) {
+				return response.filter(
+					(el: Card) =>
+						el.img &&
+						el.cardSet.includes(
+							'Core' ||
+								'The Grand Tournament' ||
+								'The Boomsday Project' ||
+								'League of Explorers' ||
+								'Knights of the Frozen Throne'
+						)
+				)
+			},
+		}),
 	}),
 })
 
-export const { useGetCardsByQueryQuery } = cardsApi
+export const { useGetCardsByQueryQuery, useGetCardByQueryQuery } = cardsApi

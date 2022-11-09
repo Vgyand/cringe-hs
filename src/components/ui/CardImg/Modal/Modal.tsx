@@ -6,6 +6,7 @@ import {
 	addedToFavorite,
 	removedFromFavorite,
 } from '../../../../store/favoritesSlice'
+import Button from '../../Button/Button'
 
 import styles from './Modal.module.scss'
 
@@ -53,6 +54,7 @@ const Modal = ({ artist, cardSet, flavor, name, id, img }: ModalType) => {
 			{/* ) : (
 				<div>You need to login for add this card to favorites</div>
 			)} */}
+			<Button text="Info" type="button" to={`${id}`} />
 		</div>
 	)
 }

@@ -14,7 +14,7 @@ const Cards = ({ cards }: any) => {
 					cardSet={el.cardSet}
 					artist={el.artist}
 					flavor={el.flavor}
-					id={el.dbfId}
+					id={el.cardId}
 					key={el.dbfId}
 				/>
 			))}

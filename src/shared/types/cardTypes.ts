@@ -51,11 +51,11 @@ export interface ModalType {
 	cardSet: string
 	flavor: string
 	name: string
-	id: number
+	id: string
 	img: string
 }
 export interface FavoriteCard {
 	img: string
-	id: number
+	id: string
 	name: string
 }

@@ -10,7 +10,7 @@ interface Props {
 	artist: string
 	flavor: string
 	cardSet: string
-	id: number
+	id: string
 }
 
 const Modal = React.lazy(() => import('./Modal/Modal'))

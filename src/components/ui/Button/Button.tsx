@@ -15,7 +15,7 @@ const Button = ({ type, text, to }: IButton) => {
 	)
 }
 
-Button.PropTypes = {
+Button.propTypes = {
 	type: PropTypes.string,
 	text: PropTypes.string,
 	to: PropTypes.string,

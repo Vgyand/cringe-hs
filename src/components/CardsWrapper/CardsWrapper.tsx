@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
 
 import { SearchParamsTypes } from '@/shared/types/cardTypes'
@@ -9,6 +10,7 @@ import manaImg from '../../assets/mana.png'
 import { cardsOnPage, options } from '../../config/constants'
 import { useDebounce } from '../../hooks/hooks'
 import { useGetCardsByQueryQuery } from '../../store/cardsApi'
+import { addedToHistory } from '../../store/historySlice'
 import Cards from '../Cards/Cards'
 import FilterWrapper from '../FilterWrapper/FilterWrapper'
 import Pagination from '../Pagination/Pagination'
@@ -22,6 +24,7 @@ const CardsWrapper = () => {
 	const [cost, setCost] = useState('')
 	const [health, setHealth] = useState('')
 	const [attack, setAttack] = useState('')
+	const dispatch = useDispatch()
 	const debouncedSearch = useDebounce(search, 1000)
 	const searchParams: SearchParamsTypes = {
 		heroClass,
@@ -30,6 +33,14 @@ const CardsWrapper = () => {
 		health,
 		attack,
 	}
+
+	//dispatch search params to history
+
+	useEffect(() => {
+		//dispatch(addedToHistory(searchParams))
+	}, [searchParams])
+
+	//dispatch search params to history
 
 	const { data, isLoading, isFetching, error } =
 		useGetCardsByQueryQuery(searchParams)
