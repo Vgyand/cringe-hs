@@ -22,7 +22,6 @@ export const cardsApi = createApi({
 					locale: 'enUs',
 					collectible: '1',
 				}
-				console.log(searchState.filteredSearch, searchState.cost)
 				if (searchState.cost) params.cost = searchState.cost
 				if (searchState.attack) params.attack = searchState.attack
 				if (searchState.health) params.health = searchState.health

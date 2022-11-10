@@ -1,0 +1,10 @@
+.historyCard {
+	@apply text-white mx-5;
+	cursor: pointer;
+	padding: 10px;
+	&:hover {
+		background-color: black;
+		box-shadow: 0px 0px 0px 1px red inset;
+		padding: 10px;
+	}
+}

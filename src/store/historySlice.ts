@@ -14,7 +14,13 @@ const historySlice = createSlice({
 	initialState: [] as HistoryState[],
 	reducers: {
 		addedToHistory(state, action: PayloadAction<HistoryState>) {
-			console.log(state.length)
+			if (state.length > 5) {
+				state.shift()
+			}
+			console.log(state.includes(action.payload))
+			if (state.includes(action.payload)) {
+				state
+			}
 			state.push(action.payload)
 		},
 	},

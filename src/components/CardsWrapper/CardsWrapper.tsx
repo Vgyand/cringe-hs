@@ -18,7 +18,7 @@ import Dropdown from '../ui/Dropdown/Dropdown'
 
 import styles from './CardsWrapper.module.scss'
 
-const CardsWrapper = () => {
+const CardsWrapper = ({ searchProps }: any) => {
 	const [heroClass, setHeroClass] = useState('')
 	const [search, setSearch] = useState('')
 	const [cost, setCost] = useState('')
@@ -34,18 +34,15 @@ const CardsWrapper = () => {
 		attack,
 	}
 
-	//dispatch search params to history
-
-	useEffect(() => {
-		//dispatch(addedToHistory(searchParams))
-	}, [searchParams])
-
-	//dispatch search params to history
-
-	const { data, isLoading, isFetching, error } =
-		useGetCardsByQueryQuery(searchParams)
+	const { data, isLoading, isFetching, error } = useGetCardsByQueryQuery(
+		searchProps || searchParams
+	)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [cardsPerPage] = useState(cardsOnPage)
+
+	useEffect(() => {
+		dispatch(addedToHistory(searchParams))
+	}, [data])
 
 	if (isLoading) return <p className="text-center">Loader</p>
 
