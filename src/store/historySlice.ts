@@ -17,7 +17,6 @@ const historySlice = createSlice({
 			if (state.length > 5) {
 				state.shift()
 			}
-			console.log(state.includes(action.payload))
 			if (state.includes(action.payload)) {
 				state
 			}

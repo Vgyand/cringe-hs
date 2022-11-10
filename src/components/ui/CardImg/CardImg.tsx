@@ -38,13 +38,13 @@ const CardImg = ({ img, name, artist, flavor, cardSet, id }: Props) => {
 	)
 }
 
-CardImg.PropTypes = {
+CardImg.propTypes = {
 	img: PropTypes.string,
 	name: PropTypes.string,
 	artist: PropTypes.string,
 	flavor: PropTypes.string,
 	cardSet: PropTypes.string,
-	id: PropTypes.number,
+	id: PropTypes.string,
 }
 
 export default CardImg

@@ -1,14 +1,18 @@
 import { useState } from 'react'
 
+import Cards from '../../components/Cards/Cards'
 import CardsWrapper from '../../components/CardsWrapper/CardsWrapper'
 import { useAppSelector } from '../../hooks/hooks'
+import { useGetCardsByQueryQuery } from '../../store/cardsApi'
 
 import styles from './History.module.scss'
 
 const History = () => {
 	const [searchParams, setSearchParams] = useState({})
 	const history = useAppSelector((data) => data.history)
-
+	const { data, isLoading, isFetching, error } =
+		useGetCardsByQueryQuery(searchParams)
+	console.log(data)
 	return (
 		<div>
 			<div className="flex justify-center">
@@ -34,8 +38,13 @@ const History = () => {
 					<>History is empty</>
 				)}
 			</div>
-
-			<CardsWrapper searchProps={searchParams} />
+			{data ? (
+				<>
+					<Cards cards={data} />
+				</>
+			) : (
+				<>loadinb</>
+			)}
 		</div>
 	)
 }

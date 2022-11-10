@@ -34,9 +34,8 @@ const CardsWrapper = ({ searchProps }: any) => {
 		attack,
 	}
 
-	const { data, isLoading, isFetching, error } = useGetCardsByQueryQuery(
-		searchProps || searchParams
-	)
+	const { data, isLoading, isFetching, error } =
+		useGetCardsByQueryQuery(searchParams)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [cardsPerPage] = useState(cardsOnPage)
 
