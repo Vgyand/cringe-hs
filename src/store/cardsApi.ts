@@ -10,6 +10,9 @@ interface ParamsType {
 	attack?: string
 }
 
+const cardSets = new Set()
+cardSets.add('Core')
+
 export const cardsApi = createApi({
 	reducerPath: 'cardsApi',
 	baseQuery: fetchBaseQuery({
@@ -45,17 +48,7 @@ export const cardsApi = createApi({
 				}
 			},
 			transformResponse(response: any) {
-				return response.filter(
-					(el: Card) =>
-						el.img &&
-						el.cardSet.includes(
-							'Core' ||
-								'The Grand Tournament' ||
-								'The Boomsday Project' ||
-								'League of Explorers' ||
-								'Knights of the Frozen Throne'
-						)
-				)
+				return response.filter((el: Card) => el.img && cardSets.has(el.cardSet))
 			},
 		}),
 		getCardByQuery: build.query({
@@ -77,16 +70,8 @@ export const cardsApi = createApi({
 			},
 			transformResponse(response: any) {
 				return response.filter(
-					(el: Card) =>
-						el.img &&
-						el.cardSet.includes(
-							'Core' ||
-								'The Grand Tournament' ||
-								'The Boomsday Project' ||
-								'League of Explorers' ||
-								'Knights of the Frozen Throne'
-						)
-				)
+					(el: Card) => el.img && cardSets.has(el.cardSet)
+				)[0]
 			},
 		}),
 	}),

@@ -54,7 +54,7 @@ const Modal = ({ artist, cardSet, flavor, name, id, img }: ModalType) => {
 			{/* ) : (
 				<div>You need to login for add this card to favorites</div>
 			)} */}
-			<Button text="Info" type="button" to={`${id}`} />
+			<Button text="Info" type="button" to={id} />
 		</div>
 	)
 }

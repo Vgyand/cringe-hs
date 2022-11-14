@@ -11,14 +11,11 @@ export interface HistoryState {
 
 const historySlice = createSlice({
 	name: 'history',
-	initialState: [] as HistoryState[],
+	initialState: {} as HistoryState[],
 	reducers: {
 		addedToHistory(state, action: PayloadAction<HistoryState>) {
 			if (state.length > 5) {
 				state.shift()
-			}
-			if (state.includes(action.payload)) {
-				state
 			}
 			state.push(action.payload)
 		},

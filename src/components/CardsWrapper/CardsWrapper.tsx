@@ -1,8 +1,10 @@
+import queryString from 'query-string'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
+import { useLocation } from 'react-router-dom'
 
-import { SearchParamsTypes } from '@/shared/types/cardTypes'
+import { Card, SearchParamsTypes } from '@/shared/types/cardTypes'
 
 import attackImg from '../../assets/attack.png'
 import healthImg from '../../assets/health.png'
@@ -18,14 +20,17 @@ import Dropdown from '../ui/Dropdown/Dropdown'
 
 import styles from './CardsWrapper.module.scss'
 
-const CardsWrapper = ({ searchProps }: any) => {
+const CardsWrapper = () => {
+	const location = useLocation()
 	const [heroClass, setHeroClass] = useState('')
-	const [search, setSearch] = useState('')
+	const [search, setSearch] = useState<any>('')
 	const [cost, setCost] = useState('')
 	const [health, setHealth] = useState('')
 	const [attack, setAttack] = useState('')
+	const [isOpen, setIsOpen] = useState(true)
 	const dispatch = useDispatch()
-	const debouncedSearch = useDebounce(search, 1000)
+	const debouncedSearch = useDebounce(search, 300)
+	const urlParamsSearch = queryString.parse(location.search)
 	const searchParams: SearchParamsTypes = {
 		heroClass,
 		filteredSearch: debouncedSearch,
@@ -34,14 +39,17 @@ const CardsWrapper = ({ searchProps }: any) => {
 		attack,
 	}
 
+	useEffect(() => {
+		if (location.search) {
+			setSearch(urlParamsSearch.search)
+		}
+	}, [])
+
 	const { data, isLoading, isFetching, error } =
 		useGetCardsByQueryQuery(searchParams)
+
 	const [currentPage, setCurrentPage] = useState(1)
 	const [cardsPerPage] = useState(cardsOnPage)
-
-	useEffect(() => {
-		dispatch(addedToHistory(searchParams))
-	}, [data])
 
 	if (isLoading) return <p className="text-center">Loader</p>
 
@@ -53,6 +61,11 @@ const CardsWrapper = ({ searchProps }: any) => {
 		setCurrentPage(pageNumber)
 	}
 
+	//type. textContext нету ни в одном из представленном реакте типе что делац
+	const onSearchClickHandler = (e: any) => {
+		setSearch(e.target.textContent)
+		setIsOpen(!isOpen)
+	}
 	if (error) {
 		if ('status' in error) {
 			toastr.error('Card not found', 'no such card')
@@ -61,16 +74,56 @@ const CardsWrapper = ({ searchProps }: any) => {
 		}
 	}
 
+	const filteredCards = data.filter((card: Card) => {
+		return card.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+	})
+
 	return (
 		<div className={styles.cards}>
 			<>
-				<input
-					type="text"
-					value={search}
-					onChange={(e) => setSearch(e.target.value)}
-					className={styles.input}
-					placeholder="Search for cards"
-				/>
+				<form className={styles.inputForm}>
+					<div className="flex">
+						<input
+							type="text"
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							className={styles.input}
+							placeholder="Search for cards"
+							onClick={() => setIsOpen(true)}
+						/>
+						<button
+							onClick={(e) => {
+								e.preventDefault()
+								dispatch(addedToHistory(searchParams))
+							}}
+							className="text-white border"
+						>
+							Remember to history
+						</button>
+					</div>
+
+					<ul
+						className={styles.autocomplete}
+						onMouseLeave={() => setIsOpen(false)}
+					>
+						{debouncedSearch && isOpen ? (
+							<>
+								{filteredCards.map((card: Card) => (
+									<li
+										className={styles.autocomplete__item}
+										key={card.dbfId}
+										onClick={onSearchClickHandler}
+									>
+										{card.name}
+									</li>
+								))}
+							</>
+						) : (
+							''
+						)}
+					</ul>
+				</form>
+
 				<div className={styles.filter}>
 					<FilterWrapper setHeroClass={setHeroClass} heroClass={''} img={''} />
 				</div>
