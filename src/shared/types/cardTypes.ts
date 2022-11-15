@@ -14,6 +14,8 @@ export interface Card {
 	rarity: string
 	type: string
 	flavor: string
+	howToGet: string
+	faction: string
 }
 export interface PaginationType {
 	postsPerPage: number

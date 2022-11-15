@@ -1,10 +1,10 @@
 import queryString from 'query-string'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toastr } from 'react-redux-toastr'
 import { useLocation } from 'react-router-dom'
 
-import { Card, SearchParamsTypes } from '@/shared/types/cardTypes'
+import { SearchParamsTypes } from '@/shared/types/cardTypes'
 
 import attackImg from '../../assets/attack.png'
 import healthImg from '../../assets/health.png'
@@ -22,15 +22,20 @@ import styles from './CardsWrapper.module.scss'
 
 const CardsWrapper = () => {
 	const location = useLocation()
+	const dispatch = useDispatch()
+
 	const [heroClass, setHeroClass] = useState('')
-	const [search, setSearch] = useState<any>('')
 	const [cost, setCost] = useState('')
 	const [health, setHealth] = useState('')
 	const [attack, setAttack] = useState('')
 	const [isOpen, setIsOpen] = useState(true)
-	const dispatch = useDispatch()
-	const debouncedSearch = useDebounce(search, 300)
+
 	const urlParamsSearch = queryString.parse(location.search)
+
+	const [search, setSearch] = useState<any>(urlParamsSearch.search || '')
+
+	const debouncedSearch = useDebounce(search, 300)
+
 	const searchParams: SearchParamsTypes = {
 		heroClass,
 		filteredSearch: debouncedSearch,
@@ -39,31 +44,22 @@ const CardsWrapper = () => {
 		attack,
 	}
 
-	useEffect(() => {
-		if (location.search) {
-			setSearch(urlParamsSearch.search)
-		}
-	}, [])
-
 	const { data, isLoading, isFetching, error } =
 		useGetCardsByQueryQuery(searchParams)
 
 	const [currentPage, setCurrentPage] = useState(1)
 	const [cardsPerPage] = useState(cardsOnPage)
 
-	if (isLoading) return <p className="text-center">Loader</p>
-
 	const indexOfLastCard = currentPage * cardsPerPage
 	const indexOfFirdsCard = indexOfLastCard - cardsPerPage
-	const cards = data.slice(indexOfFirdsCard, indexOfLastCard)
+	const cards = data?.slice(indexOfFirdsCard, indexOfLastCard)
 
 	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber)
 	}
 
-	//type. textContext нету ни в одном из представленном реакте типе что делац
 	const onSearchClickHandler = (e: any) => {
-		setSearch(e.target.textContent)
+		setSearch(e.target.innerText)
 		setIsOpen(!isOpen)
 	}
 	if (error) {
@@ -74,9 +70,11 @@ const CardsWrapper = () => {
 		}
 	}
 
-	const filteredCards = data.filter((card: Card) => {
+	const filteredCards = data?.filter((card) => {
 		return card.name.toLowerCase().includes(debouncedSearch.toLowerCase())
 	})
+
+	if (isLoading) return <p className="text-center">Loader</p>
 
 	return (
 		<div className={styles.cards}>
@@ -108,7 +106,7 @@ const CardsWrapper = () => {
 					>
 						{debouncedSearch && isOpen ? (
 							<>
-								{filteredCards.map((card: Card) => (
+								{filteredCards?.map((card) => (
 									<li
 										className={styles.autocomplete__item}
 										key={card.dbfId}
@@ -159,12 +157,16 @@ const CardsWrapper = () => {
 				) : (
 					<>
 						<Cards cards={cards} />
-						<Pagination
-							postsPerPage={cardsPerPage}
-							totalPosts={data.length}
-							paginate={paginate}
-							currentPage={currentPage}
-						/>
+						{data ? (
+							<Pagination
+								postsPerPage={cardsPerPage}
+								totalPosts={data.length}
+								paginate={paginate}
+								currentPage={currentPage}
+							/>
+						) : (
+							''
+						)}
 					</>
 				)}
 			</>

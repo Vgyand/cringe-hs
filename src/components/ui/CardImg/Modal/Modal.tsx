@@ -38,8 +38,6 @@ const Modal = ({ artist, cardSet, flavor, name, id, img }: ModalType) => {
 			<p>Card Set: {cardSet}</p>
 			<p className={styles.modal_flavor}>{flavor}</p>
 
-			{/* {user ? ( */
-			/*По моему лучше убрать ui и чем давать возможность диспатчить, хоть и защищенные, экшены*/}
 			<div>
 				{ids.includes(id) ? (
 					<button onClick={handleRemoveFromFavorites} className="text-primary">
@@ -51,9 +49,7 @@ const Modal = ({ artist, cardSet, flavor, name, id, img }: ModalType) => {
 					</button>
 				)}
 			</div>
-			{/* ) : (
-				<div>You need to login for add this card to favorites</div>
-			)} */}
+
 			<Button text="Info" type="button" to={id} />
 		</div>
 	)

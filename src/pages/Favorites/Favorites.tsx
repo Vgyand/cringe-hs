@@ -1,11 +1,7 @@
 import FavoriteCards from '../../components/FavoriteCards/FavoriteCards'
 
 const Favorites = () => {
-	return (
-		<div>
-			<FavoriteCards />
-		</div>
-	)
+	return <FavoriteCards />
 }
 
 export default Favorites

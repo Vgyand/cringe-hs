@@ -47,7 +47,7 @@ export const cardsApi = createApi({
 					},
 				}
 			},
-			transformResponse(response: any) {
+			transformResponse(response: Card[]) {
 				return response.filter((el: Card) => el.img && cardSets.has(el.cardSet))
 			},
 		}),
@@ -68,7 +68,7 @@ export const cardsApi = createApi({
 					},
 				}
 			},
-			transformResponse(response: any) {
+			transformResponse(response: Card[]) {
 				return response.filter(
 					(el: Card) => el.img && cardSets.has(el.cardSet)
 				)[0]

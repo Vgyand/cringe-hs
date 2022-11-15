@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { SearchParamsTypes } from '@/shared/types/cardTypes'
 
@@ -8,10 +8,10 @@ import { useGetCardByQueryQuery } from '../../store/cardsApi'
 import styles from './CardInfo.module.scss'
 
 const CardInfo = () => {
-	const location = useLocation()
-	const id = location.pathname.substring(1)
+	const params = useParams()
+
 	const searchParams: SearchParamsTypes = {
-		filteredSearch: id,
+		filteredSearch: params.cardId,
 	}
 
 	const { data } = useGetCardByQueryQuery(searchParams)
