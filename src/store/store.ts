@@ -19,10 +19,12 @@ import storage from 'redux-persist/lib/storage'
 
 import { cardsApi } from './cardsApi'
 import { favorite } from './favoritesSlice'
+import { history } from './historySlice'
 import { authProtection } from './middleware/authProtection'
 
 const rootReducer = combineReducers({
 	[cardsApi.reducerPath]: cardsApi.reducer,
+	history,
 	favorite,
 	toastr: toastrReducer,
 })

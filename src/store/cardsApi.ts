@@ -10,6 +10,9 @@ interface ParamsType {
 	attack?: string
 }
 
+const cardSets = new Set()
+cardSets.add('Core')
+
 export const cardsApi = createApi({
 	reducerPath: 'cardsApi',
 	baseQuery: fetchBaseQuery({
@@ -22,7 +25,6 @@ export const cardsApi = createApi({
 					locale: 'enUs',
 					collectible: '1',
 				}
-				console.log(searchState.filteredSearch, searchState.cost)
 				if (searchState.cost) params.cost = searchState.cost
 				if (searchState.attack) params.attack = searchState.attack
 				if (searchState.health) params.health = searchState.health
@@ -45,21 +47,34 @@ export const cardsApi = createApi({
 					},
 				}
 			},
-			transformResponse(response: any) {
+			transformResponse(response: Card[]) {
+				return response.filter((el: Card) => el.img && cardSets.has(el.cardSet))
+			},
+		}),
+		getCardByQuery: build.query({
+			query: (searchState: SearchParamsTypes) => {
+				const params: ParamsType = {
+					locale: 'enUs',
+					collectible: '1',
+				}
+				return {
+					method: 'GET',
+					url: `cards/${searchState.filteredSearch}`,
+					contentType: 'application/json',
+					params,
+					headers: {
+						'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+						'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com',
+					},
+				}
+			},
+			transformResponse(response: Card[]) {
 				return response.filter(
-					(el: Card) =>
-						el.img &&
-						el.cardSet.includes(
-							'Core' ||
-								'The Grand Tournament' ||
-								'The Boomsday Project' ||
-								'League of Explorers' ||
-								'Knights of the Frozen Throne'
-						)
-				)
+					(el: Card) => el.img && cardSets.has(el.cardSet)
+				)[0]
 			},
 		}),
 	}),
 })
 
-export const { useGetCardsByQueryQuery } = cardsApi
+export const { useGetCardsByQueryQuery, useGetCardByQueryQuery } = cardsApi

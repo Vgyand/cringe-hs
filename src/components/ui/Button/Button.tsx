@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { IButton } from '@/shared/types/buttonTypes'
@@ -15,10 +15,10 @@ const Button = ({ type, text, to }: IButton) => {
 	)
 }
 
-Button.PropTypes = {
-	type: PropTypes.string,
-	text: PropTypes.string,
-	to: PropTypes.string,
+Button.propTypes = {
+	type: propTypes.string,
+	text: propTypes.string,
+	to: propTypes.string,
 }
 
 export default Button

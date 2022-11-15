@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface FavoritesState {
-	id: number
+	id: string
 	img: string
 	name: string
 }

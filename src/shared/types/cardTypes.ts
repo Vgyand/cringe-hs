@@ -14,6 +14,8 @@ export interface Card {
 	rarity: string
 	type: string
 	flavor: string
+	howToGet: string
+	faction: string
 }
 export interface PaginationType {
 	postsPerPage: number
@@ -51,11 +53,15 @@ export interface ModalType {
 	cardSet: string
 	flavor: string
 	name: string
-	id: number
+	id: string
 	img: string
 }
 export interface FavoriteCard {
 	img: string
-	id: number
+	id: string
+	name: string
+}
+
+export interface Autocomplete {
 	name: string
 }
