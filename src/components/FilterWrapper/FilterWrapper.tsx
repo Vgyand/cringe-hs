@@ -9,16 +9,14 @@ const FilterWrapper = ({ setHeroClass }: FilterType) => {
 	return (
 		<div className={styles.filters}>
 			<div className={styles.filterByClass}>
-				{filterData.map(
-					(el: { heroImg: string; heroClass: string }, index: number) => (
-						<Filter
-							key={index}
-							setHeroClass={setHeroClass}
-							heroClass={el.heroClass}
-							img={el.heroImg}
-						/>
-					)
-				)}
+				{filterData.map((el, index) => (
+					<Filter
+						key={index}
+						setHeroClass={setHeroClass}
+						heroClass={el.heroClass}
+						img={el.heroImg}
+					/>
+				))}
 			</div>
 		</div>
 	)
