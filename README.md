@@ -14,10 +14,10 @@
 - Реализована хотя бы одна форма [Login](./src/pages/Login/Login.tsx), [Register](./src/pages/Register/Register.tsx).
 - Есть применение Контекст API [AuthProvider](./src/providers/AuthProvider.tsx).
 - Есть применение предохранителя [ErrorBoundary](./src/components/ErrorBoundary/ErrorBoundary.tsx).
-- Есть хотя бы один кастомный хук [useAppDispatch,useAppSelector,useDebounce](./src/hooks/hooks.ts), [useDebounceFunc](./src/app/hooks.ts), [useDebounceValue](./src/app/hooks.ts), [useUserAuth](./src/providers/AuthProvider.tsx).
+- Есть хотя бы один кастомный хук [useAppDispatch,useAppSelector,useDebounce](./src/hooks/hooks.ts), [useUserAuth](./src/providers/AuthProvider.tsx).
 - Хотя бы несколько компонентов используют PropTypes [Button](./src/components/ui/Button/Button.tsx), [CardImg](./src/components/ui/CardImg/CardImg.tsx)
 - Поиск не должен триггерить много запросов к серверу [CardsWrapper](./src/components/CardsWrapper/CardsWrapper.tsx).
-- Есть применение lazy + Suspense [App](./src/components/ui/CardImg/CardImg.tsx)
+- Есть применение lazy + Suspense [CardImg](./src/components/ui/CardImg/CardImg.tsx)
 
 ### Redux
 
