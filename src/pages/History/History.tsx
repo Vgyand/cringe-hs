@@ -6,11 +6,11 @@ import styles from './History.module.scss'
 
 const History = () => {
 	const history = useAppSelector((data) => data.history)
-
+	console.log(history)
 	return (
 		<div>
 			<div className="flex justify-center">
-				{history ? (
+				{history.length ? (
 					<>
 						{history.map((el, index) => (
 							<Link

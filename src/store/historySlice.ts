@@ -11,12 +11,9 @@ export interface HistoryState {
 
 const historySlice = createSlice({
 	name: 'history',
-	initialState: {} as HistoryState[],
+	initialState: [] as HistoryState[],
 	reducers: {
 		addedToHistory(state, action: PayloadAction<HistoryState>) {
-			if (state.length > 5) {
-				state.shift()
-			}
 			state.push(action.payload)
 		},
 	},
